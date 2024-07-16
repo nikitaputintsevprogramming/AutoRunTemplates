@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Роснефть подбор масла</title>
+        <style>
+            body, html {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            .coverUp {
+                position: relative;
+                /* height: 1450px; */ /* удалите фиксированную высоту */
+                background-image: url('../images/cover.png');
+                background-size: cover;
+                background-position: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+            }
+
+            #coverDown {
+                /* уберите фиксированную высоту */
+            }
+
+            #openButton {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                background-color: transparent;
+                border: none;
+                padding: 0;
+            }
+
+            #openButton img {
+                width: 101px;
+                height: 101px;
+            }
+
+            #logo {
+                width: 758px;
+                height: 567px;
+            }
+            #widgetContainer {
+                width: 100%;
+                height: 940px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="coverUp">
+            <img id="logo" src="../images/logo.png" alt="Логотип"> <!-- Путь к изображению логотипа -->
+            <!-- <a href="https://spsm.appollopro.ru/" id="openButton"><img src="../images/arrow.png" alt="Открыть"></a> Путь к изображению кнопки "Открыть" -->
+        </div>
+        
+        <div id="widgetContainer">
+            <!-- Роснефть, подбор масел -->
+            <script type="text/javascript">
+                (function(r,o,s,n,e,f,t){
+                    r[n]=r[n]||function(){(r[n].a=r[n].a||[]).push(arguments)};
+                    r[n].l=1*new Date();
+                    t=o.createElement(s),s=o.getElementsByTagName(s),s=s[s.length-1],t.async=1,t.src=e,t.id=n,s.parentNode.insertBefore(t,s.nextSibling);
+                    t.onload=function(){t=new RosneftWidgetLoader(f.pid,f.lng,f.eid);if(t){t.Run()}};
+                })
+                (window,document,"script","RosneftWidgetLoader","//oilselector.rosneft-lubricants.ru/api/v1.0/loader",{
+                    pid: "C5327546-F1B2-47FE-B412-1AC75E567C52",
+                    //eid: "",
+                    //lng: "rus",
+                })
+            </script>
+            <!-- /Роснефть, подбор масел -->
+            <div id="widjecontainer">
+                <!-- Здесь ваш контент -->
+            </div>
+            
+            <script>
+            // Подождите, пока весь документ будет загружен
+            document.addEventListener('DOMContentLoaded', function() {
+                var currentURL = window.location.href;
+
+                // Проверяем, равен ли текущий URL адресу https://spsm.appollopro.ru/#
+                if (currentURL === 'https://spsm.appollopro.ru/#/' || currentURL === 'https://spsm.appollopro.ru/#') {
+                    // Если условие выполняется, добавляем обложку coverDown
+                    var coverDown = document.createElement('div');
+                    coverDown.innerHTML = '<img src="../images/cover.png" alt="Роснефть">';
+                    coverDown.style.width = '100%';
+                    coverDown.style.height = '200px'; // Примерная высота обложки
+                    document.getElementById('widjecontainer').appendChild(coverDown);
+
+                    // Слушаем событие ухода со страницы
+                    window.addEventListener('beforeunload', function(event) {
+                        // Удаляем обложку перед уходом со страницы
+                        document.getElementById('widjecontainer').removeChild(coverDown);
+                    });
+                }
+            });
+
+            // Подождите, пока весь документ будет загружен
+            // document.addEventListener('DOMContentLoaded', function() {
+            //     // Функция для проверки URL и скрытия обложки при необходимости
+            //     function checkAndHideCover() {
+            //         var currentURL = window.location.href;
+            //         // Проверяем, равен ли текущий URL адресу https://spsm.appollopro.ru/#
+            //         if (currentURL.startsWith('https://spsm.appollopro.ru/#/')) {
+            //             // Если условие выполняется, добавляем обложку coverDown
+            //             var coverDown = document.createElement('div');
+            //             coverDown.id = 'coverDown'; // Добавим идентификатор для обложки
+            //             coverDown.innerHTML = '<img src="../images/cover.png" alt="Роснефть">';
+            //             coverDown.style.width = '100%';
+            //             coverDown.style.height = '200px'; // Примерная высота обложки
+            //             document.getElementById('widjecontainer').appendChild(coverDown);
+            //         } else {
+            //             // Если в URL есть что-то после https://spsm.appollopro.ru/#/, удаляем обложку
+            //             var existingCover = document.getElementById('coverDown');
+            //             if (existingCover) {
+            //                 existingCover.parentNode.removeChild(existingCover);
+            //             }
+            //         }
+            //     }
+
+            //     // Проверяем домен при каждом клике по экрану
+            //     document.addEventListener('click', function() {
+            //         checkAndHideCover();
+            //     });
+
+            //     // Проверяем домен сразу при загрузке страницы
+            //     checkAndHideCover();
+            // });
+
+
+
+            // // Подождите, пока весь документ будет загружен
+            // document.addEventListener('DOMContentLoaded', function() {
+            //     var currentURL = window.location.href;
+
+            //     // Проверяем, равен ли текущий URL адресу https://spsm.appollopro.ru/#
+            //     if (currentURL === 'https://spsm.appollopro.ru/#/' || currentURL === 'https://spsm.appollopro.ru/#') {
+            //         // Определяем высоту виджета по центру
+            //         var widgetHeight = document.getElementById('widjecontainer').offsetHeight;
+
+            //         // Определяем высоту экрана
+            //         var screenHeight = window.innerHeight;
+
+            //         // Вычисляем разницу между высотой экрана и высотой виджета по центру
+            //         var difference = screenHeight - widgetHeight;
+
+            //         // Создаем нижнюю обложку
+            //         var coverDown = document.createElement('div');
+            //         coverDown.innerHTML = '<img src="../images/cover.png" alt="Роснефть">';
+            //         coverDown.style.width = '100%';
+
+            //         // Устанавливаем высоту нижней обложки, вычитая разницу
+            //         coverDown.style.height = difference + 'px';
+
+            //         // Добавляем нижнюю обложку под виджет по центру
+            //         document.getElementById('widjecontainer').appendChild(coverDown);
+            //     }
+            // });
+
+            </script>
+        </div>
+        
+    </body>
+</html>
