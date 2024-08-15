@@ -22,6 +22,8 @@ REM Set the first screen as primary
 echo Setting the first screen as primary...
 "%NIRCMD_PATH%" setprimarydisplay 1
 
+timeout /T 5 /NOBREAK >NUL
+
 REM Launch the first instance of the application on the first screen
 echo Launching the first instance of %APP_EXE%...
 start "" "%APP_PATH%"
@@ -31,11 +33,19 @@ timeout /T 5 /NOBREAK >NUL
 
 REM Set the second screen as primary
 echo Setting the second screen as primary...
-"%NIRCMD_PATH%" setprimarydisplay 2
+@REM "%NIRCMD_PATH%" setprimarydisplay 2
+@echo off
+for /L %%i in (2,1,5) do (
+    "%NIRCMD_PATH%" setprimarydisplay %%i
+    echo Primary display set to %%i
+    timeout /t 2 /nobreak >nul
+)
 
 REM Launch the second instance of the application on the second screen
 echo Launching the second instance of %APP_EXE%...
 start "" "%APP_PATH%"
+
+echo Press Space or Enter to reload explorer.exe %APP_EXE%...
 
 REM Wait for applications to finish
 :wait_for_exit
