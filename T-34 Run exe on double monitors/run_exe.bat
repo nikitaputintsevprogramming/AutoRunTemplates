@@ -1,5 +1,6 @@
-@REM --------------- запуск двух окон на двух экранах с помощью утилиты Nircmd ---------------
 @echo off
+chcp 65001
+setlocal enabledelayedexpansion
 
 REM Setting variables for the application path and executable name
 set "APP_PATH=%~dp0Configurator\Car_Configurator.exe"
@@ -12,7 +13,7 @@ REM Function to create a shortcut if it doesn't exist
 if not exist "%STARTUP_FOLDER%\%SHORTCUT_NAME%" (
     echo Creating shortcut in Startup folder...
     "%NIRCMD_PATH%" shortcut "%APP_PATH%" "%STARTUP_FOLDER%\%SHORTCUT_NAME%"
-    if %ERRORLEVEL% EQU 0 (
+    if !ERRORLEVEL! EQU 0 (
         echo Shortcut created successfully.
     ) else (
         echo Failed to create shortcut.
@@ -21,51 +22,98 @@ if not exist "%STARTUP_FOLDER%\%SHORTCUT_NAME%" (
     echo Shortcut already exists in Startup folder.
 )
 
-REM Stopping the explorer process
-taskkill /F /IM explorer.exe
+timeout /t 11 /nobreak
 
-if %ERRORLEVEL% NEQ 0 (
-    echo Error stopping explorer.
-    echo Restarting explorer...
-    start explorer.exe
-    echo Done!
-    pause
-    exit /b %ERRORLEVEL%
+@REM REM Stopping the explorer process
+@REM REM taskkill /F /IM explorer.exe
+
+@REM REM if !ERRORLEVEL! NEQ 0 (
+@REM REM     echo Error stopping explorer.
+@REM REM     echo Restarting explorer...
+@REM REM     start explorer.exe
+@REM REM     echo Done!
+@REM REM     pause
+@REM REM     exit /b !ERRORLEVEL!
+@REM REM )
+
+set "file=input.txt"
+
+REM Display current value from the file if it exists
+if exist "%file%" (
+    echo Current value in file %file%:
+    type "%file%"
+) else (
+    echo File %file% not found. A new one will be created.
 )
 
-REM Set the first screen as primary
-echo Setting the first screen as primary...
-"%NIRCMD_PATH%" setprimarydisplay 1
+REM Read the content of the file into a variable
+set /p fileValue=<"%file%"
 
-timeout /T 5 /NOBREAK >NUL
+REM Remove any trailing spaces or newlines from the value
+set "fileValue=%fileValue: =%"
 
-REM Launch the first instance of the application on the first screen
-echo Launching the first instance of %APP_EXE%...
-start "" "%APP_PATH%"
+REM Check the value and perform actions
+if "%fileValue%"=="y" (
+    REM Set the first screen as primary
+    echo Setting the first screen as primary...
+    "%NIRCMD_PATH%" setprimarydisplay 1
 
-REM Wait for the first instance to launch
-timeout /T 5 /NOBREAK >NUL
+    timeout /T 5 /NOBREAK >NUL
 
-REM Set the second screen as primary
-echo Setting the second screen as primary...
-@REM "%NIRCMD_PATH%" setprimarydisplay 2
-@echo off
-for /L %%i in (2,1,5) do (
-    "%NIRCMD_PATH%" setprimarydisplay %%i
-    echo Primary display set to %%i
-    timeout /t 2 /nobreak >nul
+    REM Launch the first instance of the application on the first screen
+    echo Launching the first instance of %APP_EXE%...
+    start "" "%APP_PATH%"
+
+    REM Wait for the first instance to launch
+    timeout /T 5 /NOBREAK >NUL
+
+    REM Set the second screen as primary
+    echo Setting the second screen as primary...
+    for /L %%i in (2,1,5) do (
+        "%NIRCMD_PATH%" setprimarydisplay %%i
+        echo Primary display set to %%i
+        timeout /t 2 /nobreak >nul
+    )
+
+    REM Launch the second instance of the application on the second screen
+    echo Launching the second instance of %APP_EXE%...
+    start "" "%APP_PATH%"
+
+) else if "%fileValue%"=="n" (
+    REM Set the second screen as primary
+    echo Setting the second screen as primary...
+    for /L %%i in (2,1,5) do (
+        "%NIRCMD_PATH%" setprimarydisplay %%i
+        echo Primary display set to %%i
+        timeout /t 2 /nobreak >nul
+    )
+
+    REM Launch the second instance of the application on the second screen
+    echo Launching the second instance of %APP_EXE%...
+    start "" "%APP_PATH%"
+
+    REM Wait for the first instance to launch
+    timeout /T 5 /NOBREAK >NUL
+
+    REM Set the first screen as primary
+    echo Setting the first screen as primary...
+    "%NIRCMD_PATH%" setprimarydisplay 1
+
+    timeout /T 5 /NOBREAK >NUL
+
+    REM Launch the first instance of the application on the first screen
+    echo Launching the first instance of %APP_EXE%...
+    start "" "%APP_PATH%"
+) else (
+    echo Error reading screen configuration, what value is in input.txt?
 )
-
-REM Launch the second instance of the application on the second screen
-echo Launching the second instance of %APP_EXE%...
-start "" "%APP_PATH%"
 
 echo Press Space or Enter to reload explorer.exe %APP_EXE%...
 
 REM Wait for applications to finish
 :wait_for_exit
 tasklist /FI "IMAGENAME eq %APP_EXE%" 2>NUL | find /I /N "%APP_EXE%" >NUL
-if "%ERRORLEVEL%"=="0" (
+if "!ERRORLEVEL!"=="0" (
     timeout /T 5 /NOBREAK >NUL
     goto wait_for_exit
 )

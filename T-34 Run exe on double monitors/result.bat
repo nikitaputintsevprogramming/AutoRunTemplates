@@ -14,8 +14,8 @@ if exist "%file%" (
 )
 
 REM Запускаем таймер в фоновом потоке
-@REM start "" /b cmd /c "timeout /t 10 /nobreak >nul & echo Время ожидания истекло. Программа завершена. & exit /b"
-start "" /b cmd /c "timeout /t 10 /nobreak >nul & echo Время ожидания истекло. Программа завершена. & taskkill /f /im cmd.exe >nul 2>&1"
+@REM start "" /b cmd /c "timeout /t 10 /nobreak >nul & echo Время ожидания истекло. Программа завершена. & exit /b" & taskkill /f /im cmd.exe >nul 2>&
+start "" /b cmd /c "timeout /t 10 /nobreak >nul & echo Время ожидания истекло. Программа завершена. 1"
 
 :question
 REM Задаем вопрос
@@ -37,7 +37,7 @@ if /i "%user_input%"=="y" (
 echo Ответ сохранен в файле %file%
 
 REM Завершаем фоновый таймер
-taskkill /f /im cmd.exe >nul 2>&1
+@REM taskkill /f /im cmd.exe >nul 2>&1
 
 REM Продолжить выполнение программы или добавить дополнительный код здесь
-pause
+@REM pause

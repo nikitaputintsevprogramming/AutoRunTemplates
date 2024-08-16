@@ -1,3 +1,3 @@
 @echo off
-start "" "ConfimationConfiguration.bat"
+start "" "run_exe.bat"
 start "" "result.bat"
