@@ -5,6 +5,7 @@ setlocal enabledelayedexpansion
 set "APP_PATH=%~dp0Configurator\Car_Configurator.exe"
 set "SHORTCUT_NAME=Car_Configurator.lnk"
 set "STARTUP_FOLDER=%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup"
+set "NIRCMD_PATH=%~dp0T-34\nircmd-x64\nircmd.exe"
 
 if not exist "%STARTUP_FOLDER%\%SHORTCUT_NAME%" (
     echo Creating shortcut in Startup folder...
@@ -51,7 +52,7 @@ REM Remove any trailing spaces or newlines from the value
 set "fileValue=%fileValue: =%"
 
 REM Check the value and perform actions
-if "%fileValue%"=="y" (
+if "%fileValue%"=="1" (
     REM Set the first screen as primary
     echo Setting the first screen as primary...
     "%NIRCMD_PATH%" setprimarydisplay 1
@@ -77,7 +78,7 @@ if "%fileValue%"=="y" (
     echo Launching the second instance of %APP_EXE%...
     start "" "%APP_PATH%"
 
-) else if "%fileValue%"=="n" (
+) else if "%fileValue%"=="0" (
     REM Set the second screen as primary
     echo Setting the second screen as primary...
     for /L %%i in (2,1,5) do (
