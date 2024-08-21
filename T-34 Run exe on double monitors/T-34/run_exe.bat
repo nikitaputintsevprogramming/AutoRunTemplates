@@ -27,17 +27,17 @@ if not exist "%NIRCMD_PATH%" (
     exit /b 1
 )
 
-echo Stopping the explorer process
-taskkill /F /IM explorer.exe
+@REM echo Stopping the explorer process
+@REM taskkill /F /IM explorer.exe
 
-if !ERRORLEVEL! NEQ 0 (
-    echo Error stopping explorer.
-    echo Restarting explorer...
-    start explorer.exe
-    echo Done!
-    pause
-    exit /b !ERRORLEVEL!
-)
+@REM if !ERRORLEVEL! NEQ 0 (
+@REM     echo Error stopping explorer.
+@REM     echo Restarting explorer...
+@REM     start explorer.exe
+@REM     echo Done!
+@REM     pause
+@REM     exit /b !ERRORLEVEL!
+@REM )
 
 
 set "file=input.txt"
