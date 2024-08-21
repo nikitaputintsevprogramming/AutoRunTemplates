@@ -3,7 +3,7 @@ chcp 65001 >nul
 
 setlocal
 
-set "file=input.txt"
+set "file=%~dp0..\input.txt"
 
 :: Показать текущее значение из файла, если файл существует
 if exist "%file%" (

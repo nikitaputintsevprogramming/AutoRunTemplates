@@ -3,13 +3,14 @@ chcp 65001
 setlocal enabledelayedexpansion
 
 set "APP_PATH=%~dp0Configurator\Car_Configurator.exe"
+set "SHORTCUT_PATH=%~dp0..\Run_exe.bat"
 set "SHORTCUT_NAME=Car_Configurator.lnk"
 set "STARTUP_FOLDER=%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup"
 set "NIRCMD_PATH=%~dp0nircmd-x64\nircmd.exe"
 
 if not exist "%STARTUP_FOLDER%\%SHORTCUT_NAME%" (
     echo Creating shortcut in Startup folder...
-    powershell -command "$s=(New-Object -COM WScript.Shell).CreateShortcut('%STARTUP_FOLDER%\%SHORTCUT_NAME%');$s.TargetPath='%APP_PATH%';$s.Save()"
+    powershell -command "$s=(New-Object -COM WScript.Shell).CreateShortcut('%STARTUP_FOLDER%\%SHORTCUT_NAME%');$s.TargetPath='%SHORTCUT_PATH%';$s.Save()"
     if %ERRORLEVEL% EQU 0 (
         echo Shortcut created successfully.
     ) else (
@@ -40,7 +41,7 @@ if not exist "%NIRCMD_PATH%" (
 @REM )
 
 
-set "file=input.txt"
+set "file=%~dp0..\input.txt"
 
 REM Display current value from the file if it exists
 if exist "%file%" (
