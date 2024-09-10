@@ -39,8 +39,6 @@ REM Launch the first instance of the application on the first screen
     REM Wait for the first instance to launch
     timeout /T 5 /NOBREAK >NUL
 
-
-
 REM Wait for applications to finish
 :wait_for_exit
 tasklist /FI "IMAGENAME eq Dedoslavl.exe" 2>NUL | find /I /N "Dedoslavl.exe" >NUL
