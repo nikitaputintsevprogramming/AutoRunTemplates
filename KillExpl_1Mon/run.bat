@@ -3,22 +3,10 @@ chcp 65001
 setlocal enabledelayedexpansion
 
 set "APP_PATH=%~dp0Dedoslavl\Dedoslavl.exe"
-set "SHORTCUT_PATH=%~dp0run.bat"
-set "SHORTCUT_NAME=Dedoslavl.lnk"
-set "STARTUP_FOLDER=%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup"
+
 @REM C:\Users\User\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
 
-if not exist "%STARTUP_FOLDER%\%SHORTCUT_NAME%" (
-    echo Creating shortcut in Startup folder...
-    powershell -command "$s=(New-Object -COM WScript.Shell).CreateShortcut('%STARTUP_FOLDER%\%SHORTCUT_NAME%');$s.TargetPath='%SHORTCUT_PATH%';$s.Save()"
-    if %ERRORLEVEL% EQU 0 (
-        echo Shortcut created successfully.
-    ) else (
-        echo Failed to create shortcut.
-    )
-) else (
-    echo Shortcut already exists in Startup folder.
-)
+
 
 echo Stopping the explorer process
 taskkill /F /IM explorer.exe
